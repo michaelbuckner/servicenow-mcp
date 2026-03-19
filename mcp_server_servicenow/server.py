@@ -150,7 +150,7 @@ class OAuthAuth(Authentication):
         
     async def get_headers(self) -> Dict[str, str]:
         """Get authentication headers for ServiceNow API requests"""
-        if self.token is None or (self.token_expiry and datetime.now() > self.token_expiry):
+        if self.token is None or (self.token_expiry and datetime.now().timestamp() > self.token_expiry):
             await self.refresh()
             
         return {"Authorization": f"Bearer {self.token}"}
